@@ -13,6 +13,7 @@ md_message: "You are viewing raw source files... Go to https://wiki.starcitizen-
 
 ## Mouse/Cursor warp issues and view snapping in interaction mode
 *This issue can also manifest as some main menu buttons not working due to the cursor actually being offset*
+*Another form of the same issue: an interactable's hover highlight (hold `F` / inner thought) registers for only a moment before dropping, so it cannot be clicked.*
 
 Workarounds to try:
 - Experimental LUG [Wine Wayland](/Tips-and-Tricks#wine-wayland) helps mitigate this for some
@@ -24,6 +25,8 @@ Workarounds to try:
   - Install and enable gamescope. Set these options for your display resolution  
   `-W 2560 -H 1440 --force-grab-cursor`
   - Other Gamescope settings that may be required depending on your system: `Window Mode` set to `Fullscreen` if it doesn't launch fullscreen, `-g` in `Custom Settings` to grab keyboard
+  - Hyprland users: wrap the last line of your launch script so gamescope owns the cursor, e.g. `gamescope -W 2560 -H 1440 --force-grab-cursor -- "$wine_path"/wine "C:\Program Files\Roberts Space Industries\RSI Launcher\RSI Launcher.exe" > "$launch_log" 2>&1`
+- Check Mouse Smoothing is at its default of `0` — a non-default value has been seen alongside this issue. The shipped default profile has `<Attr name="MouseSmoothing" cvar="i_mouse_smooth" value="0"/>`; check `LIVE/user/client/0/Profiles/default/attributes.xml`, or pin it with `i_Mouse_Smooth = 0.0` in [USER.cfg](/Tips-and-Tricks#usercfg)
 - Install and choose Xorg/x11 session at your login screen instead of Wayland session
 - Switching to an alternate desktop environment may help; most Gnome users don't seem to experience this issue as severely
 - You may try building xwayland with [this patch](https://github.com/Nobara-Project/rpm-sources/blob/main/baseos/xorg-x11-server-Xwayland/xwayland-pointer-warp-fix.patch) applied. If using KDE and patching xwayland, you will also need to install Gamescope and use the `--force-grab-cursor` option
